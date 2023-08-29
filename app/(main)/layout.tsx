@@ -8,11 +8,10 @@ export default async function DashboardLayout({
   params: { storeId: string };
 }) {
   const session = await getServerSession();
-  console.log(session);
-  const userId = session?.user?.name;
-  if (!userId) {
-    redirect("/");
-  }
+  const user = session?.user;
+  // if (!user) {
+  //   redirect("/api/auth/signin");
+  // }
 
   return (
     <>
