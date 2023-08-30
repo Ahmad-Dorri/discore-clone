@@ -1,8 +1,9 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const SigninButton = () => {
   const { data: session } = useSession();
@@ -15,7 +16,11 @@ const SigninButton = () => {
       </div>
     );
   }
-  return <Button onClick={() => signIn()}>SignIn</Button>;
+  return (
+    <Button>
+      <Link href="/signIn">SignIn</Link>
+    </Button>
+  );
 };
 
 export default SigninButton;
