@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/lib/db";
 
 interface RequestBody {
   name: string;
@@ -8,7 +8,7 @@ interface RequestBody {
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
-  const user = await prisma.user.create({
+  const user = await db.user.create({
     data: {
       name: body.name,
       email: body.email,

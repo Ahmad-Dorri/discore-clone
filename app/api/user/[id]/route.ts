@@ -1,5 +1,5 @@
+import { db } from "@/lib/db";
 import { verifyJwt } from "@/lib/jwt";
-import prisma from "@/lib/prisma";
 
 interface Params {
   params: {
@@ -16,19 +16,22 @@ export async function GET(request: Request, { params }: Params) {
       { status: 401 },
     );
   }
-  const userPosts = await prisma.post.findMany({
-    where: {
-      authorId: +params.id,
-    },
-    include: {
-      author: {
-        select: {
-          email: true,
-          name: true,
-        },
-      },
-    },
-  });
+  // const userServers = await prisma.profile.findMany({
+  //   where: {
 
-  return new Response(JSON.stringify(userPosts));
+  //   },
+  //   include: {
+  //     author: {
+  //       select: {
+  //         email: true,
+  //         name: true,
+  //       },
+  //     },
+  //   },
+  // });
+  const userServers = await prisma.user.findMany({
+    where: {},
+    include: {},
+  });
+  // return new Response(JSON.stringify());
 }

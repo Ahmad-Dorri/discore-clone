@@ -11,18 +11,88 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int      @id @unique @default(autoincrement())
+  name     String
+  email    String   @unique
   password String
-  name     String?
-  posts    Post[]
+  profile  Profile?
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+model Profile {
+  id       String @id @unique @default(uuid())
+  imageUrl String
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  servers   Server[]
+  members   Member[]
+  channels  Channel[]
+
+  @@index([userId])
+}
+
+model Server {
+  id         String  @id @unique @default(uuid())
+  name       String
+  imageUrl   String
+  inviteCode String
+  profileId  String
+  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  members   Member[]
+  channels  Channel[]
+
+  @@index([profileId])
+}
+
+// enum MemberRole{
+//   GUEST
+//   MODERATOR
+//   ADMIN
+// }
+
+model Member {
+  id   String @id @unique @default(uuid())
+  role String @default("GUEST")
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+// enum ChannelType {
+//   TEXT
+//   AUDIO
+//   VIDEO
+// }
+
+model Channel {
+  id   String @id @default(uuid())
+  name String
+  type String @default("TEXT")
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
 }
