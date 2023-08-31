@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
 
 import SessionProvider from "@/providers/session-provider";
@@ -15,9 +16,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={openSans.className}>
-        <SessionProvider>{props.children}</SessionProvider>
+        <ThemeProvider enableSystem attribute="class" defaultTheme="system">
+          <SessionProvider>{props.children}</SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
