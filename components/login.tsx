@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
-import { cn } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -24,10 +23,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import SignUpButton from "./sign-up-button";
 
 const formSchema = z.object({
-  username: z.string().min(1, "please enter your username"),
-  password: z.string().min(1, "please enter your password"),
+  username: z
+    .string()
+    .email("please enter a valid username.")
+    .min(1, "please enter your username."),
+  password: z
+    .string()
+    .min(4, "please enter your password.(At least 4 characters)"),
 });
 
 type loginFormValues = z.infer<typeof formSchema>;
@@ -103,6 +108,7 @@ const Login = (props: Props) => {
               <Link href={props.callbackUrl ?? "/"}>Cancel</Link>
             </Button>
           </CardFooter>
+          <SignUpButton />
         </form>
       </Form>
     </Card>

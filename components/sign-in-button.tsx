@@ -5,7 +5,19 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const SigninButton = () => {
+interface SigninButtonProps {
+  variant?:
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
+}
+
+const SigninButton = (props: SigninButtonProps) => {
   const { data: session } = useSession();
 
   if (session && session.user) {
@@ -17,7 +29,7 @@ const SigninButton = () => {
     );
   }
   return (
-    <Button>
+    <Button variant={props.variant}>
       <Link href="/signIn">SignIn</Link>
     </Button>
   );

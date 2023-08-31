@@ -8,12 +8,10 @@ interface SignInProps {
 
 const SignInPage = (props: SignInProps) => {
   return (
-    <div className="grid h-full w-full place-items-center bg-blue-200">
-      <Login
-        callbackUrl={props.searchParams?.callbackUrl}
-        error={props.searchParams?.error}
-      />
-    </div>
+    <Login
+      callbackUrl={props.searchParams?.callbackUrl}
+      error={props.searchParams?.error}
+    />
   );
 };
 
