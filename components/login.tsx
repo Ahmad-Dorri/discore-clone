@@ -53,12 +53,16 @@ const Login = (props: Props) => {
     },
   });
   const onSubmit = async (values: loginFormValues) => {
-    await signIn("credentials", {
-      username: values.username,
-      password: values.password,
-      redirect: true,
-      callbackUrl: props.callbackUrl ?? "http://localhost:3000",
-    });
+    try {
+      await signIn("credentials", {
+        username: values.username,
+        password: values.password,
+        redirect: true,
+        callbackUrl: props.callbackUrl ?? "http://localhost:3000",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -95,7 +99,7 @@ const Login = (props: Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="password" {...field} />
+                    <Input type="password" placeholder="password" {...field} />
                   </FormControl>
                   <FormMessage className="font-YekanBakh text-red-600" />
                 </FormItem>

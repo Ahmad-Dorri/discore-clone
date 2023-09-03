@@ -1,8 +1,10 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+// import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export const options: NextAuthOptions = {
+  // adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
@@ -16,7 +18,7 @@ export const options: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
+        // Add logic here to look up the profile from the credentials supplied
         const res = await fetch("http://localhost:3000/api/login", {
           method: "POST",
           headers: {
@@ -30,13 +32,13 @@ export const options: NextAuthOptions = {
         const user = await res.json();
 
         if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+          // Any object returned will be saved in `profile` property of the JWT
           return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
+          // If you return null then an error will be displayed advising the profile to check their details.
           return null;
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          // You can also Reject this callback with an Error thus the profile will be sent to the error page with the error message as a query parameter
         }
       },
     }),
@@ -49,8 +51,8 @@ export const options: NextAuthOptions = {
     signIn: "/signIn",
   },
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async jwt({ token, profile }) {
+      return { ...token, ...profile };
     },
 
     async session({ session, token }) {
