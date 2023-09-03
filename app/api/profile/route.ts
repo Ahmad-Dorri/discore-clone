@@ -8,7 +8,7 @@ interface RequestBody {
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
-  const user = await prisma.user.create({
+  const user = await prisma.profile.create({
     data: {
       name: body.name,
       email: body.email,
@@ -21,11 +21,11 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  const users = await prisma.user.findMany();
+  const profiles = await prisma.profile.findMany();
 
-  if (!users) {
-    return new Response("there is no user founded.", { status: 400 });
+  if (!profiles) {
+    return new Response("there is no profile founded.", { status: 400 });
   }
 
-  return new Response(JSON.stringify(users));
+  return new Response(JSON.stringify(profiles));
 }

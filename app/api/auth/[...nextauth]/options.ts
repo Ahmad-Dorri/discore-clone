@@ -1,7 +1,9 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-// import { PrismaAdapter } from "@next-auth/prisma-adapter";
+// import GoogleProvider from "next-auth/providers/google";
+// import GithubProvider from "next-auth/providers/github";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
+// import { prisma } from "@/lib/prisma";
 
 export const options: NextAuthOptions = {
   // adapter: PrismaAdapter(prisma),
@@ -42,10 +44,14 @@ export const options: NextAuthOptions = {
         }
       },
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_ID as string,
+    //   clientSecret: process.env.GOOGLE_SECRET as string,
+    // }),
+    // GithubProvider({
+    //   clientId: process.env.GITHUB_ID!,
+    //   clientSecret: process.env.GITHUB_SECRET!,
+    // }),
   ],
   pages: {
     signIn: "/signIn",
@@ -60,4 +66,5 @@ export const options: NextAuthOptions = {
       return session;
     },
   },
+  // debug: true,
 };

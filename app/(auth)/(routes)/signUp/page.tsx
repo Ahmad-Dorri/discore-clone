@@ -58,14 +58,14 @@ const SingUp = () => {
   });
   const onSubmit = async (values: SingUpFormValues) => {
     try {
-      const users: User[] = (await axios.get("/api/user")).data;
+      const users: User[] = (await axios.get("/api/profile")).data;
       console.log(users);
       users.map((user) => {
         if (user.email === values.email) {
           throw new Error("username already exists.");
         }
       });
-      await axios.post("/api/user", values);
+      await axios.post("/api/profile", values);
       toast.success("successfully signed up");
       router.push("/signIn");
     } catch (error: any) {
