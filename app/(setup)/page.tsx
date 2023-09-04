@@ -1,14 +1,11 @@
-"use client";
 import SigninButton from "@/components/sign-in-button";
-import { useSession } from "next-auth/react";
-import React from "react";
+import { GetProfile } from "@/lib/get-profile";
 
+import React from "react";
 const Home = () => {
-  const data = useSession();
-  console.log(data);
+  GetProfile("123");
   return (
     <div>
-      please complete your profile
       <SigninButton />
     </div>
   );

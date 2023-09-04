@@ -59,7 +59,7 @@ const SingUp = () => {
   const onSubmit = async (values: SingUpFormValues) => {
     try {
       const users: User[] = (await axios.get("/api/profile")).data;
-      console.log(users);
+      
       users.map((user) => {
         if (user.email === values.email) {
           throw new Error("username already exists.");

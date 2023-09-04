@@ -19,7 +19,7 @@ interface SigninButtonProps {
 
 const SigninButton = (props: SigninButtonProps) => {
   const { data: session } = useSession();
-
+  console.log(session?.user);
   if (session && session.user) {
     return (
       <div className="ml-auto flex gap-4">

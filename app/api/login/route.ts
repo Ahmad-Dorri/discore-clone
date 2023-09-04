@@ -1,3 +1,4 @@
+import { signJwtAccessToken } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
 
 interface RequestBody {
@@ -11,11 +12,21 @@ export async function POST(request: Request) {
       email: body.username,
     },
   });
-  console.log("profile", profile);
   if (profile && body.password === profile.password) {
     const { password, ...userWithoutPassword } = profile;
-
-    return new Response(JSON.stringify(userWithoutPassword));
+    const accessToken = signJwtAccessToken(userWithoutPassword);
+    const result = { ...userWithoutPassword, accessToken };
+    console.log("result", result);
+    //!updating the profile to change the accesstoken
+    await prisma.profile.updateMany({
+      where: {
+        email: body.username,
+      },
+      data: {
+        ...result,
+      },
+    });
+    return new Response(JSON.stringify(result));
   } else {
     return new Response(JSON.stringify(null), { status: 401 });
   }
