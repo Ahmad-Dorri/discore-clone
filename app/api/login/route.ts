@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     const { password, ...userWithoutPassword } = profile;
     const accessToken = signJwtAccessToken(userWithoutPassword);
     const result = { ...userWithoutPassword, accessToken };
-    console.log("result", result);
     //!updating the profile to change the accesstoken
     await prisma.profile.updateMany({
       where: {

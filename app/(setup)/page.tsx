@@ -1,10 +1,11 @@
-import SigninButton from "@/components/sign-in-button";
-import { getServerSession } from "next-auth";
-
 import React from "react";
-import { options } from "../api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import LoginModal from "@/components/modals/login-modal";
+
+import SigninButton from "@/components/sign-in-button";
+import { options } from "../api/auth/[...nextauth]/options";
+import ServerModal from "@/components/modals/server-modal";
+
 const Home = async () => {
   const session = await getServerSession(options);
   const profile = session?.user;
@@ -29,7 +30,7 @@ const Home = async () => {
 
   return (
     <div>
-      <LoginModal />
+      <ServerModal />
       <SigninButton />
     </div>
   );
