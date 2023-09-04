@@ -57,7 +57,7 @@ export const options: NextAuthOptions = {
     signIn: "/signIn",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ user, token }) {
       return { ...token, ...user };
     },
 
@@ -66,5 +66,5 @@ export const options: NextAuthOptions = {
       return session;
     },
   },
-  // debug: true,
+  debug: true,
 };

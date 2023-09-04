@@ -1,9 +1,11 @@
 import SigninButton from "@/components/sign-in-button";
-import { GetProfile } from "@/lib/get-profile";
+import { getServerSession } from "next-auth";
 
 import React from "react";
-const Home = () => {
-  GetProfile("123");
+import { options } from "../api/auth/[...nextauth]/options";
+const Home = async () => {
+  const session = await getServerSession(options);
+  console.log(session);
   return (
     <div>
       <SigninButton />
