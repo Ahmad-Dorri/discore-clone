@@ -1,3 +1,4 @@
+"use client";
 import Modal from "@/components/ui/modal";
 
 import { useLoginModal } from "@/hooks/use-login-modal";
