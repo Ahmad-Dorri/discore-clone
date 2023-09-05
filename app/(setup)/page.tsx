@@ -31,7 +31,7 @@ const Home = async () => {
 
   return (
     <div>
-      <InitialModal open={true} />
+      <InitialModal isOpen={true} />
       <SigninButton />
     </div>
   );

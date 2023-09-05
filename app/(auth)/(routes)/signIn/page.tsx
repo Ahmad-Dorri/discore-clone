@@ -1,5 +1,6 @@
-import Login from "@/components/login";
 import React from "react";
+
+import Login from "@/components/login";
 
 interface SignInProps {
   className?: string;
