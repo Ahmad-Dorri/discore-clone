@@ -42,12 +42,14 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
     "uploadthing": "^5.5.2",
+    "uuid": "^9.0.0",
     "zod": "^3.22.2",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/uuid": "^9.0.3",
     "prettier-plugin-tailwindcss": "^0.5.3",
     "prisma": "^5.2.0"
   }

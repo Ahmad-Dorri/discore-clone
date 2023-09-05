@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import Modal from "@/components/ui/modal";
 import {
@@ -32,6 +34,7 @@ type ServerFormType = z.infer<typeof formSchema>;
 
 const InitialModal = ({ isOpen }: InitialModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
   const form = useForm<ServerFormType>({
     // @ts-ignore
     resolver: zodResolver(formSchema),
@@ -51,6 +54,10 @@ const InitialModal = ({ isOpen }: InitialModalProps) => {
   const onSubmit = async (values: ServerFormType) => {
     try {
       console.log(values);
+      await axios.post("/api/servers", values);
+      form.reset();
+      router.refresh();
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
