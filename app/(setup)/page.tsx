@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 
 import SigninButton from "@/components/sign-in-button";
 import { options } from "../api/auth/[...nextauth]/options";
-import ServerModal from "@/components/modals/server-modal";
+import InitialModal from "@/components/modals/initial-modal";
+import { prisma } from "@/lib/prisma";
 
 const Home = async () => {
   const session = await getServerSession(options);
@@ -30,7 +31,7 @@ const Home = async () => {
 
   return (
     <div>
-      <ServerModal />
+      <InitialModal open={true} />
       <SigninButton />
     </div>
   );

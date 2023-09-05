@@ -30,9 +30,13 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>
       <DialogContent>
-        <DialogHeader className="mt-2 rtl:text-right">
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+        <DialogHeader className="px-6 pt-8">
+          <DialogTitle className="text-center text-2xl font-bold">
+            {title}
+          </DialogTitle>
+          <DialogDescription className="text-center text-zinc-500">
+            {description}
+          </DialogDescription>
         </DialogHeader>
         <div>{children}</div>
       </DialogContent>
