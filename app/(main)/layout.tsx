@@ -1,13 +1,15 @@
-import NavigationSidebar from "@/components/navigation/navigation-sidebar";
+import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative h-full">
-      <div className="fixed inset-y-0 z-30 hidden h-full w-[72px] flex-col  md:flex">
-        <NavigationSidebar />
+    <>
+      <div className="relative h-full">
+        <div className="fixed inset-y-0 z-30 hidden h-full w-[72px] flex-col  md:flex">
+          <NavigationSidebar />
+        </div>
+        <main className="h-full  md:pl-[72px]">{children}</main>
       </div>
-      <main className="h-full  md:pl-[72px]">{children}</main>
-    </div>
+    </>
   );
 };
 

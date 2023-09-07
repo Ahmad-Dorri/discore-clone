@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import SessionProvider from "@/providers/session-provider";
 import { cn } from "@/lib/utils";
+import ModalProvider from "@/providers/modal-provider";
 
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -25,7 +26,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           attribute="class"
           defaultTheme="light"
         >
-          <SessionProvider>{props.children}</SessionProvider>
+          <SessionProvider>
+            <ModalProvider />
+            {props.children}
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>
