@@ -5,6 +5,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { currentProfile } from "@/lib/current-profile";
 import { prisma } from "@/lib/prisma";
+import SigninButton from "@/components/sign-in-button";
 
 import NavigationAction from "./navigation-action";
 import NavigationItem from "./navigation-item";
@@ -43,6 +44,7 @@ export const NavigationSidebar = async () => {
       </ScrollArea>
       <div className="mt-auto flex flex-col items-center gap-y-4 pb-3">
         <ModeToggle />
+        <SigninButton />
       </div>
     </div>
   );
