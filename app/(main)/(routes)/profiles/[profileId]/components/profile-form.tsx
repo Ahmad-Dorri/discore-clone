@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import FileUpload from "@/components/file-upload";
 import UseOrigin from "@/hooks/use-origin";
+import axios from "axios";
 
 const formSchema = z.object({
   name: z.string().min(1, "please enter your name."),
@@ -53,7 +54,8 @@ const ProfileForm = () => {
   }
   const onSubmit = async (values: ProfileValues) => {
     try {
-      console.log(values);
+      await axios.patch(`/api/profile/${user.id}`, values);
+      signOut();
     } catch (error) {
       console.log(error);
     }

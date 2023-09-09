@@ -36,19 +36,9 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
 ) {
-  const accessToken = request.headers.get("authorization");
   const body: RequestBody = await request.json();
   console.log(body);
-  if (!accessToken || !verifyJwt(accessToken)) {
-    return new Response(
-      JSON.stringify({
-        error: "unauthorized",
-      }),
-      {
-        status: 401,
-      },
-    );
-  }
+
   const profile = await prisma.profile.updateMany({
     where: {
       id: params.id,
