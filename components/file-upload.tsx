@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 
 interface FileUploadProps {
   onChange: (url?: string) => void;
-  endPoint: "serverImage" | "messageFile";
+  endPoint: "serverImage" | "messageFile" | "profileImage";
   value: string;
 }
 

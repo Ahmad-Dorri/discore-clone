@@ -61,7 +61,7 @@ const Login = (props: Props) => {
         callbackUrl: props.callbackUrl ?? "http://localhost:3000",
       });
     } catch (error) {
-      console.log(error);
+      console.log("SING-IN-ERROR: ", error);
     }
   };
 

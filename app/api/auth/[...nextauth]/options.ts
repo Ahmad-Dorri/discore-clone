@@ -37,6 +37,7 @@ export const options: NextAuthOptions = {
           // Any object returned will be saved in `profile` property of the JWT
           return user;
         } else {
+          console.log("THERE IS NO USER FOUNDED.");
           // If you return null then an error will be displayed advising the profile to check their details.
           return null;
 

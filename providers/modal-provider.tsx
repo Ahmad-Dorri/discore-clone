@@ -12,7 +12,7 @@ const ModalProvider = () => {
   }
   return (
     <>
-      <CreateServerModal />;
+      <CreateServerModal />
     </>
   );
 };

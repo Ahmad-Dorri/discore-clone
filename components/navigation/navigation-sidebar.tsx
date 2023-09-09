@@ -9,6 +9,7 @@ import SigninButton from "@/components/sign-in-button";
 
 import NavigationAction from "./navigation-action";
 import NavigationItem from "./navigation-item";
+import Link from "next/link";
 
 export const NavigationSidebar = async () => {
   const profile = await currentProfile();

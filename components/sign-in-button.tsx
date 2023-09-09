@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "next/navigation";
 
 interface SigninButtonProps {
   variant?:
@@ -27,7 +26,6 @@ interface SigninButtonProps {
 
 const SigninButton = (props: SigninButtonProps) => {
   const { data: session } = useSession();
-  const router = useRouter();
 
   if (!session) {
     return (
@@ -52,12 +50,19 @@ const SigninButton = (props: SigninButtonProps) => {
         side="right"
       >
         <p>{session.user.name}</p>
-        <Button
-          onClick={() => router.push(`/${session.user.id}`)}
-          variant={"ghost"}
-        >
-          Profile
-        </Button>
+        {/* //? NAVIGATION DISSAPIERD */}
+        <Link href={`/profiles/${session.user.id}`}>Profile</Link>
+        {/* <button onClick={() => router.push(`/profiles/${session.user.id}`)}>
+          profile
+        </button> */}
+        {/* //? ERROR HAPPENS DURING THIS LINE */}
+        {/* <button
+          onClick={() =>
+            window.location.replace(`/profiles/${session.user.id}`)
+          }
+        > */}
+        {/* my profile
+        </button> */}
         <Button variant={"destructive"} onClick={() => signOut()}>
           logout
         </Button>
