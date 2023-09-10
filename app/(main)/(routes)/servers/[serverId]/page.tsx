@@ -11,14 +11,15 @@ interface ServerProps {
 }
 const ServerPage = async ({ params }: ServerProps) => {
   const session = await getServerSession(options);
+  console.log(session);
   if (!session) {
     redirect("/signIn");
   }
-  const verifiedUser = verifyJwt(session?.user.accessToken);
-  if (!verifiedUser) {
-    signOut();
-    redirect("/signIn");
-  }
+  // const verifiedUser = verifyJwt(session?.user.accessToken);
+  // if (!verifiedUser) {
+  //   signOut();
+  //   redirect("/signIn");
+  // }
 
   const server = await prisma.server.findFirst({
     where: {

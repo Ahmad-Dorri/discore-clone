@@ -16,8 +16,8 @@ export const options: NextAuthOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        username: { label: "username", type: "text", placeholder: "jsmith" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
         // Add logic here to look up the profile from the credentials supplied
@@ -32,6 +32,7 @@ export const options: NextAuthOptions = {
           }),
         });
         const user = await res.json();
+        console.log(user);
 
         if (user) {
           // Any object returned will be saved in `profile` property of the JWT
@@ -58,14 +59,13 @@ export const options: NextAuthOptions = {
     signIn: "/signIn",
   },
   callbacks: {
-    async jwt({ user, token }) {
-      return { ...token, ...user };
-    },
-
-    async session({ session, token }) {
-      session.user = token as any;
-      return session;
-    },
+    // async jwt({ user, token }) {
+    //   return { ...token, ...user };
+    // },
+    //   async session({ session, token }) {
+    //     session.user = token as any;
+    //     return session;
+    //   },
   },
   // debug: true,
 };
