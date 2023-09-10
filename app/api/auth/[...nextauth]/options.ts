@@ -59,13 +59,13 @@ export const options: NextAuthOptions = {
     signIn: "/signIn",
   },
   callbacks: {
-    // async jwt({ user, token }) {
-    //   return { ...token, ...user };
-    // },
-    //   async session({ session, token }) {
-    //     session.user = token as any;
-    //     return session;
-    //   },
+    async jwt({ user, token }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
   },
-  // debug: true,
+  debug: true,
 };

@@ -9,12 +9,11 @@ datasource db {
 }
 
 model Profile {
-  id          String  @id @default(uuid())
-  name        String
-  imageUrl    String? @db.Text
-  email       String  @unique @db.Text
-  accessToken String? @db.Text
-  password    String
+  id       String  @id @default(uuid())
+  name     String
+  imageUrl String? @db.Text
+  email    String  @unique @db.Text
+  password String
 
   servers  Server[]
   members  Member[]

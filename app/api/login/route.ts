@@ -16,12 +16,13 @@ export async function POST(request: Request) {
   });
   if (profile && body.password === profile.password) {
     const { password, ...userWithoutPassword } = profile;
-    // const accessToken = signJwtAccessToken(userWithoutPassword);
-    // const result = { ...userWithoutPassword, accessToken: "1234" };
-    // console.log(result);
+    const accessToken = signJwtAccessToken(userWithoutPassword);
+    console.log(accessToken);
+    const result = { ...userWithoutPassword, accessToken };
+    console.log(result);
     //!updating the profile to change the accesstoken
 
-    return new NextResponse(JSON.stringify(userWithoutPassword));
+    return new NextResponse(JSON.stringify(result));
   } else {
     return new Response(JSON.stringify(null), { status: 401 });
   }
