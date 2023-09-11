@@ -7,7 +7,7 @@ import ModalProvider from "@/providers/modal-provider";
 
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import React from "react";
+import StoreProvider from "@/providers/store-provider";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -20,17 +20,19 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(openSans.className, "bg-white dark:bg-[#313338]")}>
-        <ThemeProvider
-          storageKey="discord-theme"
-          enableSystem={false}
-          attribute="class"
-          defaultTheme="light"
-        >
-          <SessionProvider>
-            <ModalProvider />
-            {props.children}
-          </SessionProvider>
-        </ThemeProvider>
+        <StoreProvider>
+          <ThemeProvider
+            storageKey="discord-theme"
+            enableSystem={false}
+            attribute="class"
+            defaultTheme="light"
+          >
+            <SessionProvider>
+              <ModalProvider />
+              {props.children}
+            </SessionProvider>
+          </ThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );

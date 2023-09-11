@@ -91,7 +91,6 @@ const InitialModal = ({ isOpen }: InitialModalProps) => {
                 </FormItem>
               )}
             />
-            {/* //TODO: UPLOAD IMAGE COMPONENT */}
             <FormField
               control={form.control}
               name="imageUrl"

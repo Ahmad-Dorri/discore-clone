@@ -1,6 +1,8 @@
-import React from "react";
+interface ServerSidebarProps {
+  serverId: string;
+}
 
-const ServerSidebar = () => {
+const ServerSidebar = ({ serverId }: ServerSidebarProps) => {
   return <div>ServerSidebar</div>;
 };
 

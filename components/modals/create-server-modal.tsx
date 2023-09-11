@@ -5,7 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 
+import type { RootState } from "@/store/store";
+import { onClose, onOpen } from "@/store/slices/modal-slice";
 import Modal from "@/components/ui/modal";
 import {
   Form,
@@ -19,7 +22,6 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/file-upload";
-import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
   name: z.string().min(1, "Server name is required."),
@@ -27,10 +29,12 @@ const formSchema = z.object({
 });
 
 type ServerFormType = z.infer<typeof formSchema>;
-
+// !compoent starts here
 const CreateServerModal = () => {
   const router = useRouter();
-  const modal = useModal();
+  const dispatch = useDispatch();
+  const modal = useSelector((state: RootState) => state.modal);
+
   const isModalOpen = modal.isOpen && modal.type === "CreateServer";
   const form = useForm<ServerFormType>({
     // @ts-ignore
@@ -45,14 +49,14 @@ const CreateServerModal = () => {
 
   const handleClose = () => {
     form.reset();
-    modal.onClose();
+    dispatch(onClose());
   };
   const onSubmit = async (values: ServerFormType) => {
     try {
       await axios.post("/api/servers", values);
       form.reset();
       router.refresh();
-      modal.onClose();
+      dispatch(onClose());
     } catch (error) {
       console.log(error);
     }

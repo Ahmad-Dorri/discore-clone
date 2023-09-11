@@ -2,12 +2,13 @@
 
 import { Plus } from "lucide-react";
 import ActionTooltip from "@/components/action-tooltip";
-import { useModal } from "@/hooks/use-modal-store";
+import { useDispatch } from "react-redux";
+import { onOpen } from "@/store/slices/modal-slice";
 
 const NavigationAction = () => {
-  const modal = useModal();
+  const dispatch = useDispatch();
   const addServer = () => {
-    modal.onOpen("CreateServer");
+    dispatch(onOpen("CreateServer"));
   };
   return (
     <div>

@@ -1,3 +1,5 @@
+// !CREATED WITH ZUSTAND CHANGE IT TO REDUX-TOOLKIT
+/*
 import { create } from "zustand";
 
 export type ModalType = "CreateServer";
@@ -15,3 +17,4 @@ export const useModal = create<ModalStore>((set) => ({
   onOpen: (type) => set({ isOpen: true, type }),
   onClose: () => set({ isOpen: false, type: null }),
 }));
+*/
