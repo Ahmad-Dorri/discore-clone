@@ -63,7 +63,7 @@ const Login = (props: Props) => {
         username: values.username,
         password: values.password,
         redirect: true,
-        callbackUrl: props.callbackUrl ?? origin?.toString(),
+        callbackUrl: props.callbackUrl ?? origin ?? "/",
       });
       // const profile = await axios.post(`api/login`, values);
       // console.log(profile.data);

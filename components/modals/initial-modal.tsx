@@ -53,7 +53,6 @@ const InitialModal = ({ isOpen }: InitialModalProps) => {
 
   const onSubmit = async (values: ServerFormType) => {
     try {
-      console.log(values);
       await axios.post("/api/servers", values);
       form.reset();
       router.refresh();

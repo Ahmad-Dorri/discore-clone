@@ -32,7 +32,6 @@ export const options: NextAuthOptions = {
           }),
         });
         const user = await res.json();
-        console.log(user);
 
         if (user) {
           // Any object returned will be saved in `profile` property of the JWT
