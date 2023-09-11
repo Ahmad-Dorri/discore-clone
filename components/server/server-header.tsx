@@ -18,6 +18,8 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { onOpen } from "@/store/slices/modal-slice";
 
 type ServerHeaderProps = {
   server: ServerWithMembersWithProfiles;
@@ -25,6 +27,7 @@ type ServerHeaderProps = {
 };
 
 const ServerHeader = ({ server, role }: ServerHeaderProps) => {
+  const dispatch = useDispatch();
   const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
@@ -38,7 +41,10 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 space-y-4  text-xs font-medium text-black dark:text-neutral-400">
         {isModerator && (
-          <DropdownMenuItem className="cursor-pointer px-3 py-2 text-sm text-indigo-600 dark:text-indigo-400">
+          <DropdownMenuItem
+            onClick={() => dispatch(onOpen("Invite"))}
+            className="cursor-pointer px-3 py-2 text-sm text-indigo-600 dark:text-indigo-400"
+          >
             Invite People
             <UserPlus className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
