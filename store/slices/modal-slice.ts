@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { ServerWithMembersWithProfiles } from "@/types";
 
-export type ModalType = "CreateServer" | "Invite";
+export type ModalType = "CreateServer" | "Invite" | "EditServer";
 
 interface ModalData {
   server?: ServerWithMembersWithProfiles;
