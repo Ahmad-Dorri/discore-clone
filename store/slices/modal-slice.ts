@@ -15,6 +15,11 @@ export interface ModalState {
   data: ModalData;
 }
 
+interface ModalAction {
+  type: ModalType | null;
+  data?: ModalData;
+}
+
 const initialState: ModalState = {
   type: null,
   isOpen: false,
@@ -26,15 +31,16 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     onOpen: {
-      reducer: (state, action: PayloadAction<ModalState>) => {
-        state.data = action.payload.data;
+      reducer: (state, action: PayloadAction<ModalAction>) => {
+        action.payload.data
+          ? (state.data = action.payload.data)
+          : (state.data = {});
         state.type = action.payload.type;
         state.isOpen = true;
       },
       prepare(type: ModalType, data: ModalData = {}) {
-        const isOpen = true;
         return {
-          payload: { type, data, isOpen },
+          payload: { type, data },
         };
       },
     },

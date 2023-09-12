@@ -10,7 +10,7 @@ const UseOrigin = () => {
     setIsMounted(true);
   }, []);
   if (!isMounted) {
-    return null;
+    return "";
   }
   return origin;
 };
