@@ -33,14 +33,18 @@ const InviteModal = () => {
   };
 
   const onNew = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await axios.patch(
         `/api/servers/${server?.id}/invite-code`,
       );
+      console.log(response.data);
       dispatch(onOpen("Invite", { server: response.data }));
+      toast.success("new invite code created.");
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      toast.error("an error happend.");
       setIsLoading(false);
     }
   };
@@ -61,7 +65,7 @@ const InviteModal = () => {
           <div className="mt-2 flex items-center gap-x-2 ">
             <Input
               disabled={isLoading}
-              defaultValue={inivteLink}
+              value={inivteLink}
               className="border-0 bg-zinc-100/80 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
             />
             <Button disabled={isLoading} size={"icon"} onClick={onCopy}>
