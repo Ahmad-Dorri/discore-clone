@@ -64,6 +64,7 @@ const InviteModal = () => {
           </Label>
           <div className="mt-2 flex items-center gap-x-2 ">
             <Input
+              readOnly
               disabled={isLoading}
               value={inivteLink}
               className="border-0 bg-zinc-100/80 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
