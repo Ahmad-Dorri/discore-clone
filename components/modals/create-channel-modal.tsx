@@ -21,53 +21,44 @@ import {
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import FileUpload from "@/components/file-upload";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Server name is required."),
-  imageUrl: z.string().min(1, "Server image is required."),
+  name: z.string().min(1, "Channel name is required."),
 });
 
-type ServerFormType = z.infer<typeof formSchema>;
-// !compoent starts here
-const CreateServerModal = () => {
-  const router = useRouter();
+type ChannelFormType = z.infer<typeof formSchema>;
+
+const CreateChannelModal = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const modal = useSelector((state: RootState) => state.modal);
 
-  const isModalOpen = modal.isOpen && modal.type === "CreateServer";
-  const form = useForm<ServerFormType>({
+  const form = useForm<ChannelFormType>({
     // @ts-ignore
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      imageUrl: "",
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
-
-  const handleClose = () => {
-    form.reset();
-    dispatch(onClose());
-  };
-  const onSubmit = async (values: ServerFormType) => {
+  const onSubmit = (values: ChannelFormType) => {
     try {
-      await axios.post("/api/servers", values);
-      form.reset();
-      router.refresh();
-      dispatch(onClose());
+      console.log("CHANNEL_CREATE_MODAL", values);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const isModalOpen = modal.isOpen && modal.type === "CreateChannel";
+
+  const isLoading = form.formState.isSubmitting;
+
   return (
     <Modal
+      title="Create Channel"
+      description="Create your channel"
+      onClose={() => dispatch(onClose())}
       isOpen={isModalOpen}
-      onClose={handleClose}
-      title="Customize Your Server"
-      description="Give Your Server a Personality by a name and an Image. You can always change it later."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -78,30 +69,13 @@ const CreateServerModal = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">
-                    server name
+                    channel name
                   </FormLabel>
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      placeholder="Enter Sever Name ..."
+                      placeholder="Enter Channel Name ..."
                       {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="font-YekanBakh text-red-600" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <FileUpload
-                      endPoint="serverImage"
-                      value={field.value}
-                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage className="font-YekanBakh text-red-600" />
@@ -120,4 +94,4 @@ const CreateServerModal = () => {
   );
 };
 
-export default CreateServerModal;
+export default CreateChannelModal;
