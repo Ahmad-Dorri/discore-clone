@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChannelType } from "@prisma/client";
+import queryString from "query-string";
 
 const formSchema = z.object({
   name: z
@@ -47,17 +48,27 @@ const CreateChannelModal = () => {
   const router = useRouter();
   const modal = useSelector((state: RootState) => state.modal);
 
+  const serverId = modal?.data?.server?.id;
+
   const form = useForm<ChannelFormType>({
     // @ts-ignore
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      type: ChannelType.TEXT,
     },
   });
 
-  const onSubmit = (values: ChannelFormType) => {
+  const onSubmit = async (values: ChannelFormType) => {
     try {
-      console.log("CHANNEL_CREATE_MODAL", values);
+      //   console.log("CHANNEL_CREATE_MODAL", values);
+      const url = queryString.stringifyUrl({
+        url: "/api/channels",
+        query: {
+          serverId,
+        },
+      });
+      await axios.post(url, values);
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +104,39 @@ const CreateChannelModal = () => {
                     />
                   </FormControl>
                   <FormMessage className="font-YekanBakh text-red-600" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">
+                    channel type
+                  </FormLabel>
+                  <FormControl>
+                    <Select
+                      disabled={isLoading}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="border-0 bg-zinc-300/50 capitalize text-black outline-none ring-offset-0 focus:ring-0 focus:ring-offset-0">
+                        <SelectValue placeholder="Select a Channel Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.values(ChannelType).map((type) => (
+                          <SelectItem
+                            key={type}
+                            value={type}
+                            className="capitalize"
+                          >
+                            {type.toLowerCase()}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
                 </FormItem>
               )}
             />
