@@ -21,9 +21,23 @@ import {
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ChannelType } from "@prisma/client";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Channel name is required."),
+  name: z
+    .string()
+    .min(1, "Channel name is required.")
+    .refine((name) => name !== "general", {
+      message: "channel name cannot be 'general'",
+    }),
+  type: z.nativeEnum(ChannelType),
 });
 
 type ChannelFormType = z.infer<typeof formSchema>;
@@ -56,7 +70,7 @@ const CreateChannelModal = () => {
   return (
     <Modal
       title="Create Channel"
-      description="Create your channel"
+      description=""
       onClose={() => dispatch(onClose())}
       isOpen={isModalOpen}
     >
