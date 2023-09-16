@@ -9,7 +9,7 @@ interface RequestBody {
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: { profileId: string } },
 ) {
   const accessToken = request.headers.get("authorization");
 
@@ -25,28 +25,7 @@ export async function GET(
   }
   const profile = await prisma.profile.findFirst({
     where: {
-      id: params.id,
-    },
-  });
-
-  return new Response(JSON.stringify(profile));
-}
-
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
-  const body: RequestBody = await request.json();
-  console.log(body);
-
-  const profile = await prisma.profile.updateMany({
-    where: {
-      id: params.id,
-    },
-    data: {
-      name: body.name,
-      email: body.email,
-      imageUrl: body.imageUrl,
+      id: params.profileId,
     },
   });
 

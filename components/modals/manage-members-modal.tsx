@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import qs from "query-string";
 import {
   Check,
   Gavel,
-  Loader,
   Loader2,
   MoreVertical,
   Shield,
@@ -11,9 +11,13 @@ import {
   ShieldCheck,
   ShieldQuestion,
 } from "lucide-react";
+import { MemberRole } from "@prisma/client";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import Modal from "@/components/ui/modal";
-import { onClose } from "@/store/slices/modal-slice";
+import { onClose, onOpen } from "@/store/slices/modal-slice";
 import { RootState } from "@/store/store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import UserAvatar from "@/components/user-avatar";
@@ -38,15 +42,69 @@ const roleIconMap = {
 const ManageMembersModal = () => {
   const modal = useSelector((state: RootState) => state.modal);
   const dispatch = useDispatch();
+  const session = useSession();
+  const router = useRouter();
   const [loadingId, setLoadingId] = useState("");
   const isModalOpen = modal.isOpen && modal.type === "ManageMembers";
-
   const { server } = modal.data;
+
+  const onRoleChange = async (memberId: string, role: MemberRole) => {
+    try {
+      setLoadingId(memberId);
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+          memberId,
+        },
+      });
+      const response = await axios({
+        method: "patch",
+        url,
+        data: { role },
+        headers: {
+          Authorization: session.data?.user.accessToken,
+        },
+      });
+      router.refresh();
+      dispatch(onOpen("ManageMembers", { server: response.data }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingId("");
+    }
+  };
+
+  const onDeleteMemeber = async (memberId: string) => {
+    try {
+      setLoadingId(memberId);
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+          memberId,
+        },
+      });
+      const response = await axios({
+        method: "delete",
+        url,
+        headers: {
+          Authorization: session.data?.user.accessToken,
+        },
+      });
+      router.refresh();
+      dispatch(onOpen("ManageMembers", { server: response.data }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingId("");
+    }
+  };
 
   return (
     <Modal
       title="Manage Members"
-      description={`${server?.members.length.toString()} members`}
+      description={`${server?.members?.length?.toString()} members`}
       isOpen={isModalOpen}
       onClose={() => dispatch(onClose())}
     >
@@ -79,14 +137,20 @@ const ManageMembersModal = () => {
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                           <DropdownMenuSubContent>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => onRoleChange(member.id, "GUEST")}
+                            >
                               <Shield className="mr-2 h-4 w-4" />
                               Guest
                               {member.role === "GUEST" && (
                                 <Check className="ml-auto h-4 w-4" />
                               )}
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                onRoleChange(member.id, "MODERATOR")
+                              }
+                            >
                               <ShieldCheck className="mr-2 h-4 w-4" />
                               Moderator
                               {member.role === "MODERATOR" && (
@@ -97,7 +161,10 @@ const ManageMembersModal = () => {
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-rose-500">
+                      <DropdownMenuItem
+                        onClick={() => onDeleteMemeber(member.id)}
+                        className="text-rose-500"
+                      >
                         <Gavel className="mr-2 h-4 w-4 text-rose-500" />
                         Kick
                       </DropdownMenuItem>

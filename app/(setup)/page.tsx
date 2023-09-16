@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 const Home = async () => {
   const session = await getServerSession(options);
   const profile = session?.user;
-  console.log(profile);
+
   if (!profile) {
     return null;
   }
@@ -32,7 +32,6 @@ const Home = async () => {
   return (
     <div>
       <InitialModal isOpen={true} />
-      <SigninButton />
     </div>
   );
 };
