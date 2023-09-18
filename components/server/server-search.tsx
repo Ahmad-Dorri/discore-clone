@@ -11,6 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { useParams, useRouter } from "next/navigation";
 
 interface ServerSearchProps {
   data: {
@@ -28,6 +29,10 @@ interface ServerSearchProps {
 
 const ServerSearch = ({ data }: ServerSearchProps) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const params = useParams() as { serverId: string };
+
+  //   ! WE CAN ADD THIS TO A SLICE IN REDUX-TOOLKIT
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
@@ -41,6 +46,22 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
 
     return () => document.removeEventListener("keydown", down);
   }, [open]);
+
+  const onClick = ({
+    id,
+    type,
+  }: {
+    id: string;
+    type: "channel" | "member";
+  }) => {
+    setOpen(false);
+    if (type === "member") {
+      return router.push(`/servers/${params?.serverId}/conversation/${id}`);
+    }
+    if (type === "channel") {
+      return router.push(`/servers/${params.serverId}/channels/${id}`);
+    }
+  };
 
   return (
     <>
@@ -66,7 +87,7 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
             return (
               <CommandGroup key={label} heading={label}>
                 {data?.map(({ id, icon, name }) => (
-                  <CommandItem key={id}>
+                  <CommandItem key={id} onSelect={() => onClick({ id, type })}>
                     {icon}
                     <span>{name}</span>
                   </CommandItem>
