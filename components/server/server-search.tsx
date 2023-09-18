@@ -3,6 +3,16 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
 interface ServerSearchProps {
   data: {
     label: string;
@@ -33,6 +43,26 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
           <span className="text-xs">Ctrl </span>K
         </kbd>
       </button>
+
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Search all channels and members" />
+        <CommandList>
+          <CommandEmpty>No result found</CommandEmpty>
+          {data.map(({ type, data, label }) => {
+            if (!data?.length) return null;
+            return (
+              <CommandGroup key={label} heading={label}>
+                {data?.map(({ id, icon, name }) => (
+                  <CommandItem key={id}>
+                    {icon}
+                    <span>{name}</span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            );
+          })}
+        </CommandList>
+      </CommandDialog>
     </>
   );
 };

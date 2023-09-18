@@ -61,7 +61,7 @@ const CreateChannelModal = () => {
 
   const onSubmit = async (values: ChannelFormType) => {
     try {
-      //   console.log("CHANNEL_CREATE_MODAL", values);
+      console.log("CHANNEL_CREATE_MODAL", values);
       const url = queryString.stringifyUrl({
         url: "/api/channels",
         query: {
@@ -69,6 +69,9 @@ const CreateChannelModal = () => {
         },
       });
       await axios.post(url, values);
+      form.reset();
+      dispatch(onClose());
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
