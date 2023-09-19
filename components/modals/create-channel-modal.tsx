@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { ChannelType } from "@prisma/client";
 import queryString from "query-string";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z
@@ -47,7 +48,6 @@ const CreateChannelModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const modal = useSelector((state: RootState) => state.modal);
-
   const serverId = modal?.data?.server?.id;
 
   const form = useForm<ChannelFormType>({
@@ -59,9 +59,16 @@ const CreateChannelModal = () => {
     },
   });
 
+  useEffect(() => {
+    if (modal.data.channelType) {
+      form.setValue("type", modal.data.channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [form, modal]);
+
   const onSubmit = async (values: ChannelFormType) => {
     try {
-      console.log("CHANNEL_CREATE_MODAL", values);
       const url = queryString.stringifyUrl({
         url: "/api/channels",
         query: {

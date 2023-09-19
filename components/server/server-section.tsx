@@ -20,8 +20,8 @@ const ServerSection = ({
   label,
   role,
   sectionType,
-  channelType,
   server,
+  channelType,
 }: ServerSecionProps) => {
   const dispatch = useDispatch();
   return (
@@ -33,7 +33,9 @@ const ServerSection = ({
         <ActionTooltip label="create channel" side="top">
           <button className="text-zinc-500 transition hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300">
             <Plus
-              onClick={() => dispatch(onOpen("CreateChannel", { server }))}
+              onClick={() =>
+                dispatch(onOpen("CreateChannel", { server, channelType }))
+              }
               className="h-4 w-4"
             />
           </button>

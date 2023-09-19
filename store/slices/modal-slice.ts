@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { ChannelType } from "@prisma/client";
 
 import { ServerWithMembersWithProfiles } from "@/types";
 
@@ -14,6 +15,7 @@ export type ModalType =
 
 interface ModalData {
   server?: ServerWithMembersWithProfiles;
+  channelType?: ChannelType;
 }
 
 export interface ModalState {
