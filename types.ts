@@ -6,5 +6,5 @@ export type ServerWithMembersWithProfiles = Server & {
 
 export type ProfileWithoutPassword = Omit<
   Profile,
-  "password" | "imageUrl" | "createdAt" | "updatedAt"
+  "password" | "createdAt" | "updatedAt"
 >;
