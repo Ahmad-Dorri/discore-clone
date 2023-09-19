@@ -1,14 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Channel, ChannelType, MemberRole, Server } from "@prisma/client";
+import { Channel, ChannelType, MemberRole } from "@prisma/client";
 import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import ActionTooltip from "@/components/action-tooltip";
+import { useDispatch } from "react-redux";
+import { onOpen } from "@/store/slices/modal-slice";
+import { ServerWithMembersWithProfilsWithChannels } from "@/types";
 
 type ServerChannelProps = {
   channel: Channel;
-  server: Server;
+  server: ServerWithMembersWithProfilsWithChannels;
   role?: MemberRole;
 };
 
@@ -21,6 +24,7 @@ const iconMap = {
 const ServerChannel = ({ channel, server, role }: ServerChannelProps) => {
   const params = useParams() as { channelId: string };
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const Icon = iconMap[channel.type];
   return (
@@ -49,7 +53,13 @@ const ServerChannel = ({ channel, server, role }: ServerChannelProps) => {
             <Edit className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300" />
           </ActionTooltip>
           <ActionTooltip label="Delete">
-            <Trash className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300" />
+            <Trash
+              onClick={(e: any) => {
+                e.stopPropagation();
+                return dispatch(onOpen("DeleteChannel", { server, channel }));
+              }}
+              className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300"
+            />
           </ActionTooltip>
         </div>
       )}

@@ -11,7 +11,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import ServerChannel from "./server-channel";
 import ServerMember from "./server-member";
-import { ProfileWithoutPassword } from "@/types";
 
 interface ServerSidebarProps {
   serverId: string;
