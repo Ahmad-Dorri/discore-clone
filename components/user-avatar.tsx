@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface UserAvatarProps {
   src?: string | null;
   className?: string;
-  name: string;
+  name?: string;
 }
 
 const UserAvatar = ({ src, className, name }: UserAvatarProps) => {

@@ -22,14 +22,14 @@ const ServerPage = async ({ params }: ServerProps) => {
     signOut();
     redirect("/signIn");
   }
-  const user = session.user;
 
-  const server = await prisma.server.findFirst({
+  const channel = await prisma.channel.findFirst({
     where: {
-      id: params.serverId,
+      serverId: params.serverId,
     },
   });
-  return <div>{server?.name}</div>;
+
+  return redirect(`/servers/${params.serverId}/channels/${channel?.id}`);
 };
 
 export default ServerPage;

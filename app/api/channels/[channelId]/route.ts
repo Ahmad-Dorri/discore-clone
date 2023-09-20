@@ -29,6 +29,10 @@ export async function PATCH(
       return new NextResponse("channel id missing", { status: 400 });
     }
 
+    if (name === "general") {
+      return new NextResponse("name cannot be 'general'", { status: 400 });
+    }
+
     const server = await prisma?.server.update({
       where: {
         id: serverId,
@@ -46,6 +50,9 @@ export async function PATCH(
           updateMany: {
             where: {
               id: params.channelId,
+              NOT: {
+                name: "general",
+              },
               name: {
                 not: "general",
               },
