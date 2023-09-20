@@ -8,6 +8,7 @@ import ServerSettingsModal from "./server-settings-modal";
 import DeleteServerModal from "./delete-server-modal";
 import LeaveServerModal from "./leave-server-modal";
 import DeleteChannelModal from "./delete-channel-modal";
+import EditChannelModal from "./edit-channel-modal";
 
 export {
   InitialModal,
@@ -20,4 +21,5 @@ export {
   LeaveServerModal,
   DeleteChannelModal,
   LoginModal,
+  EditChannelModal,
 };
