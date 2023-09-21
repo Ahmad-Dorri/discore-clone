@@ -8,6 +8,7 @@ import ModalProvider from "@/providers/modal-provider";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import StoreProvider from "@/providers/store-provider";
+import { SocketProvider } from "@/providers/socket-provider";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -28,8 +29,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             defaultTheme="light"
           >
             <SessionProvider>
-              <ModalProvider />
-              {props.children}
+              <SocketProvider>
+                <ModalProvider />
+                {props.children}
+              </SocketProvider>
             </SessionProvider>
           </ThemeProvider>
         </StoreProvider>
