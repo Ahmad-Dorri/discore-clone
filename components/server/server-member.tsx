@@ -27,7 +27,7 @@ const ServerMember = ({ member, server }: ServerMemberProps) => {
   const onClick = () => {
     router.push(`/servers/${server?.id}/conversations/${member?.id}`);
   };
-  console.log(member.id === params.memberId);
+
   return (
     <button
       className={cn(

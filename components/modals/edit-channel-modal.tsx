@@ -49,7 +49,7 @@ const EditChannelModal = () => {
   const router = useRouter();
   const modal = useSelector((state: RootState) => state.modal);
   const channel = modal.data.channel;
-  console.log("CHANNEL", channel);
+
   const serverId = modal?.data?.server?.id;
 
   const form = useForm<ChannelFormType>({
