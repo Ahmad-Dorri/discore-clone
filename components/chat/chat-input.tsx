@@ -1,28 +1,34 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
-import qs from "query-string";
 import axios from "axios";
+import qs from "query-string";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+// import { useRouter } from "next/navigation";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus, Smile } from "lucide-react";
+// import { useModal } from "@/hooks/use-modal-store";
+// import { EmojiPicker } from "@/components/emoji-picker";
 
-type ChatInputProps = {
+interface ChatInputProps {
   apiUrl: string;
   query: Record<string, any>;
   name: string;
-  type: "channel" | "conversation";
-};
+  type: "conversation" | "channel";
+}
 
 const formSchema = z.object({
   content: z.string().min(1),
 });
-type ChatInputType = z.infer<typeof formSchema>;
-const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
-  const form = useForm<ChatInputType>({
+
+export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+  //   const { onOpen } = useModal();
+  //   const router = useRouter();
+
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
@@ -30,16 +36,19 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   });
 
   const isLoading = form.formState.isSubmitting;
-
-  const onSubmit = async (values: ChatInputType) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: apiUrl,
         query,
       });
+
       await axios.post(url, values);
+
+      form.reset();
+      //   router.refresh();
     } catch (error) {
-      console.log("SUBMIT_FORM_ERROR", error);
+      console.log(error);
     }
   };
 
@@ -55,10 +64,10 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                 <div className="relative p-4 pb-6">
                   <button
                     type="button"
-                    onClick={() => {}}
+                    // onClick={() => onOpen("messageFile", { apiUrl, query })}
                     className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-zinc-500 p-1 transition hover:bg-zinc-600 dark:bg-zinc-400 dark:hover:bg-zinc-300"
                   >
-                    <Plus className="text-white dark:text-[#313338] " />
+                    <Plus className="text-white dark:text-[#313338]" />
                   </button>
                   <Input
                     disabled={isLoading}
@@ -69,7 +78,9 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     {...field}
                   />
                   <div className="absolute right-8 top-7">
-                    <Smile className="" />
+                    {/* <EmojiPicker
+                      onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
+                    /> */}
                   </div>
                 </div>
               </FormControl>
@@ -80,5 +91,3 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
     </Form>
   );
 };
-
-export default ChatInput;

@@ -2,7 +2,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import ChatHeader from "@/components/chat/chat-header";
-import ChatInput from "@/components/chat/chat-input";
+import { ChatInput } from "@/components/chat/chat-input";
 type ChannelIdPageProps = {
   params: {
     serverId: string;
@@ -48,6 +48,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         query={{
           channelId: channel.id,
           serverId: channel.serverId,
+          profileId: profile.id,
         }}
       />
     </div>

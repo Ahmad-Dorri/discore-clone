@@ -2,7 +2,6 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import SigninButton from "@/components/sign-in-button";
 import { options } from "../api/auth/[...nextauth]/options";
 import InitialModal from "@/components/modals/initial-modal";
 import { prisma } from "@/lib/prisma";

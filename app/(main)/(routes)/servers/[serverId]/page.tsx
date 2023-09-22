@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
+
 interface ServerProps {
   params: {
     serverId: string;
