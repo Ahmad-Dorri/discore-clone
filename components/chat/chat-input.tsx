@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { onOpen } from "@/store/slices/modal-slice";
-// import { EmojiPicker } from "@/components/emoji-picker";
+import EmojiPicker from "@/components/emoji-picker";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -84,9 +84,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     {...field}
                   />
                   <div className="absolute right-8 top-7">
-                    {/* <EmojiPicker
-                      onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
-                    /> */}
+                    <EmojiPicker
+                      onChange={(emoji: string) =>
+                        field.onChange(`${field.value} ${emoji}`)
+                      }
+                    />
                   </div>
                 </div>
               </FormControl>
