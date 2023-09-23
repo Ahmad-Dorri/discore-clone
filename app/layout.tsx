@@ -9,6 +9,8 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import StoreProvider from "@/providers/store-provider";
 import { SocketProvider } from "@/providers/socket-provider";
+import { QueryProvider } from "@/providers/query-provider";
+import { prisma } from "@/lib/prisma";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -18,6 +20,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {
+  if (!prisma) {
+    return (
+      <div className="flex items-center justify-center">
+        cant connect to database
+      </div>
+    );
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(openSans.className, "bg-white dark:bg-[#313338]")}>
@@ -31,7 +40,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             <SessionProvider>
               <SocketProvider>
                 <ModalProvider />
-                {props.children}
+                <QueryProvider>{props.children}</QueryProvider>
               </SocketProvider>
             </SessionProvider>
           </ThemeProvider>
