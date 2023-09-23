@@ -11,6 +11,7 @@ import {
   LeaveServerModal,
   DeleteChannelModal,
   EditChannelModal,
+  MessageFileModal,
 } from "@/components/modals";
 
 const ModalProvider = () => {
@@ -32,6 +33,7 @@ const ModalProvider = () => {
       <LeaveServerModal />
       <DeleteChannelModal />
       <EditChannelModal />
+      <MessageFileModal />
     </>
   );
 };
