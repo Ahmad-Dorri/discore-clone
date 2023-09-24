@@ -27,6 +27,7 @@ const DeleteMessageModal = () => {
         query,
       });
       await axios.delete(url);
+      dispatch(onClose());
     } catch (error) {
       console.log(error);
     } finally {
