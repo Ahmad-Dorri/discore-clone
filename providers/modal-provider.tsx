@@ -6,6 +6,7 @@ import {
   InviteModal,
   ServerSettingsModal,
   ManageMembersModal,
+  DeleteMessageModal,
   CreateChannelModal,
   DeleteServerModal,
   LeaveServerModal,
@@ -34,6 +35,7 @@ const ModalProvider = () => {
       <DeleteChannelModal />
       <EditChannelModal />
       <MessageFileModal />
+      <DeleteMessageModal />
     </>
   );
 };

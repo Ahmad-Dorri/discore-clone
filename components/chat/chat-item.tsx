@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { onOpen } from "@/store/slices/modal-slice";
 
 type ChatItemProps = {
   id: string;
@@ -56,7 +58,9 @@ const ChatItem = ({
   timestamp,
 }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const form = useForm<ContentFormType>({
     resolver: zodResolver(formSchema),
@@ -220,7 +224,17 @@ const ChatItem = ({
             </ActionTooltip>
           )}
           <ActionTooltip label="Delete">
-            <Trash className="ml-auto h-4 w-4 cursor-pointer text-zinc-500 transition hover:text-zinc-600 dark:hover:text-zinc-300" />
+            <Trash
+              onClick={() =>
+                dispatch(
+                  onOpen("DeleteMessage", {
+                    apiUrl: `${socketUrl}/${id}`,
+                    query: socketQuery,
+                  }),
+                )
+              }
+              className="ml-auto h-4 w-4 cursor-pointer text-zinc-500 transition hover:text-zinc-600 dark:hover:text-zinc-300"
+            />
           </ActionTooltip>
         </div>
       )}
