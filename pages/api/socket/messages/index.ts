@@ -2,7 +2,7 @@ import { NextApiRequest } from "next";
 
 import { NextApiResponseServerIO } from "@/types";
 import { prisma } from "@/lib/prisma";
-
+//!ignore
 export function getCookie(req: NextApiRequest, name: string): string | null {
   const nameLenPlus = name.length + 1;
   if (!req) {
